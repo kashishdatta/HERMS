@@ -1,0 +1,55 @@
+Build a full-stack web application named Healthcare Equipment Rental & Maintenance System (HERMS) that performs real-time tracking, rental, and maintenance management for hospital equipment. The system should be based on the following requirements, models, and rules:
+🎯 Functional Requirements:
+
+Track real-time inventory of devices.
+Manage rentals (reservations, returns, rental periods).
+Monitor and log maintenance activities.
+Allow departments and staff to view and interact with relevant device data.
+Enforce business rules (e.g., no overlapping rentals, status updates, only technicians can maintain).
+📘 Data Model (from DBMS design):
+
+Implement the following core entities and their relationships:
+Device: device_id, device_name, device_type, status, current_location, purchase_date, manufacturer
+Staff: staff_id, first_name, last_name, role, email, contact, department_id
+Department: department_id, name, location, phone, contact_person
+Rental: rental_id, device_id, staff_id, department_id, rent_start_date, rent_end_date, rental_status
+Maintenance: maintenance_id, device_id, staff_id, maintenance_type, start_date, end_date, cost, status
+🔐 Business Rules:
+
+Rentals must not overlap.
+Devices auto-update status between Available / Rented / Under Maintenance.
+Only technicians can perform maintenance.
+Enforce referential integrity and unique constraints on email and department name.
+⚙️ Backend:
+
+Use Flask or Node.js with Express.
+Use PostgreSQL or SQLite as the database.
+Implement REST APIs for:
+Renting and returning devices
+Logging maintenance
+Querying available or rented devices
+Reporting equipment history
+💻 Frontend:
+
+Use React.js or HTML/CSS/JS to build:
+Dashboard for staff and technicians
+Forms to request rentals, return equipment, and schedule maintenance
+Tables to view device statuses, histories, and department-wise data
+🛡️ Security & Reliability:
+
+Implement role-based access control (staff vs technician).
+Encrypt passwords and ensure secure API calls.
+Simulate daily/weekly backups (you may mock this in the interface).
+📊 Reports & Queries (Implement These as Features):
+
+List devices currently rented
+List devices needing maintenance
+List maintenance activities for a device
+🧪 Sample Data:
+
+Include 5–10 sample devices, departments, staff, and example rentals/maintenance entries.
+Optional Add-ons:
+
+Filter/search functionality
+Export reports as CSV
+Notifications for overdue returns or upcoming maintenance
