@@ -1,10 +1,13 @@
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/useAuth";
 
-export default function Sidebar() {
+interface SidebarProps {
+  userRole: 'Staff' | 'Technician';
+  onLogout: () => void;
+}
+
+export default function Sidebar({ userRole, onLogout }: SidebarProps) {
   const [location] = useLocation();
-  const { user } = useAuth();
 
   const navigation = [
     {
@@ -46,11 +49,7 @@ export default function Sidebar() {
     },
   ];
 
-  const handleLogout = () => {
-    window.location.href = "/api/logout";
-  };
-
-  const isTechnician = user?.staff?.role === 'Technician';
+  const isTechnician = userRole === 'Technician';
 
   return (
     <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-lg border-r border-gray-200 z-30">

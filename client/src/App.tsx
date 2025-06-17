@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { useAuth } from "@/hooks/useAuth";
 import Login from "@/pages/login";
 import Dashboard from "@/pages/dashboard";
 import Equipment from "@/pages/equipment";
@@ -13,36 +13,33 @@ import Departments from "@/pages/departments";
 import Reports from "@/pages/reports";
 import NotFound from "@/pages/not-found";
 
-function Router() {
-  const { isAuthenticated, isLoading } = useAuth();
+type UserRole = 'Staff' | 'Technician' | null;
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mx-auto mb-4 animate-pulse">
-            <i className="fas fa-hospital text-white text-2xl"></i>
-          </div>
-          <p className="text-gray-600">Loading HERMS...</p>
-        </div>
-      </div>
-    );
+function Router() {
+  const [userRole, setUserRole] = useState<UserRole>(null);
+
+  const handleRoleSelect = (role: 'Staff' | 'Technician') => {
+    setUserRole(role);
+  };
+
+  const handleLogout = () => {
+    setUserRole(null);
+  };
+
+  if (!userRole) {
+    return <Login onRoleSelect={handleRoleSelect} />;
   }
 
   return (
     <Switch>
-      {!isAuthenticated ? (
-        <Route path="/" component={Login} />
-      ) : (
-        <>
-          <Route path="/" component={Dashboard} />
-          <Route path="/equipment" component={Equipment} />
-          <Route path="/rentals" component={Rentals} />
-          <Route path="/maintenance" component={Maintenance} />
-          <Route path="/departments" component={Departments} />
-          <Route path="/reports" component={Reports} />
-        </>
+      <Route path="/" component={() => <Dashboard userRole={userRole} onLogout={handleLogout} />} />
+      <Route path="/equipment" component={() => <Equipment userRole={userRole} onLogout={handleLogout} />} />
+      <Route path="/rentals" component={() => <Rentals userRole={userRole} onLogout={handleLogout} />} />
+      {userRole === 'Technician' && (
+        <Route path="/maintenance" component={() => <Maintenance userRole={userRole} onLogout={handleLogout} />} />
       )}
+      <Route path="/departments" component={() => <Departments userRole={userRole} onLogout={handleLogout} />} />
+      <Route path="/reports" component={() => <Reports userRole={userRole} onLogout={handleLogout} />} />
       <Route component={NotFound} />
     </Switch>
   );

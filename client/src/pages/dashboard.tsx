@@ -1,39 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Sidebar from "@/components/layout/sidebar";
 import Header from "@/components/layout/header";
-import { useAuth } from "@/hooks/useAuth";
+import { mockStats, mockRentals, mockNotifications } from "@/lib/mockData";
 
-export default function Dashboard() {
-  const { user } = useAuth();
-  
-  const { data: stats, isLoading: statsLoading } = useQuery({
-    queryKey: ["/api/dashboard/stats"],
-  });
+interface DashboardProps {
+  userRole: 'Staff' | 'Technician';
+  onLogout: () => void;
+}
 
-  const { data: currentlyRented } = useQuery({
-    queryKey: ["/api/reports/currently-rented"],
-  });
+export default function Dashboard({ userRole, onLogout }: DashboardProps) {
+  const stats = mockStats;
+  const currentlyRented = mockRentals;
+  const notifications = mockNotifications;
 
-  if (statsLoading) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex">
-        <Sidebar />
-        <div className="ml-64 flex-1 p-6">
-          <div className="animate-pulse space-y-6">
-            <div className="h-8 bg-gray-200 rounded w-1/4"></div>
-            <div className="grid grid-cols-4 gap-6">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="h-32 bg-gray-200 rounded-xl"></div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
