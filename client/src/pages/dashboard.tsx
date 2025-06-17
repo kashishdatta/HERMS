@@ -3,7 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Sidebar from "@/components/layout/sidebar";
 import Header from "@/components/layout/header";
-import { mockStats, mockRentals, mockNotifications } from "@/lib/mockData";
+import NotificationCenter from "@/components/notifications/notification-center";
+import { mockStats, mockRentals } from "@/lib/mockData";
 
 interface DashboardProps {
   userRole: 'Staff' | 'Technician';
@@ -13,7 +14,6 @@ interface DashboardProps {
 export default function Dashboard({ userRole, onLogout }: DashboardProps) {
   const stats = mockStats;
   const currentlyRented = mockRentals;
-  const notifications = mockNotifications;
 
 
 
@@ -155,6 +155,9 @@ export default function Dashboard({ userRole, onLogout }: DashboardProps) {
                 </CardContent>
               </Card>
             </div>
+
+            {/* Notifications */}
+            <NotificationCenter userRole={userRole} />
 
             {/* Quick Actions */}
             <Card>
