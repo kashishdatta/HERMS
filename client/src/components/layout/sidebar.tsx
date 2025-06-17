@@ -69,30 +69,15 @@ export default function Sidebar({ userRole, onLogout }: SidebarProps) {
         <div className="px-6 py-4 border-b border-gray-200">
           <div className="flex items-center">
             <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-              {user?.profileImageUrl ? (
-                <img 
-                  src={user.profileImageUrl} 
-                  alt="Profile" 
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-              ) : (
-                <i className="fas fa-user text-gray-600"></i>
-              )}
+              <i className={`fas ${userRole === 'Technician' ? 'fa-tools' : 'fa-user-md'} text-gray-600`}></i>
             </div>
             <div className="ml-3">
               <p className="font-medium text-gray-900">
-                {user?.firstName || user?.lastName 
-                  ? `${user.firstName || ''} ${user.lastName || ''}`.trim()
-                  : user?.email?.split('@')[0] || 'User'
-                }
+                {userRole === 'Technician' ? 'Technician User' : 'Staff Member'}
               </p>
               <p className="text-sm text-gray-600">
-                <span className="capitalize">
-                  {user?.staff?.role || 'Staff'}
-                </span>
-                {user?.staff?.departmentId && (
-                  <span> • Department</span>
-                )}
+                <span className="capitalize">{userRole}</span>
+                <span> • Healthcare</span>
               </p>
             </div>
           </div>
@@ -126,7 +111,7 @@ export default function Sidebar({ userRole, onLogout }: SidebarProps) {
         {/* Footer Actions */}
         <div className="px-6 py-4 border-t border-gray-200 space-y-2">
           <Button
-            onClick={handleLogout}
+            onClick={onLogout}
             variant="ghost"
             className="w-full justify-start text-gray-700 hover:bg-gray-100"
           >

@@ -19,7 +19,7 @@ export default function Dashboard({ userRole, onLogout }: DashboardProps) {
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
-      <Sidebar />
+      <Sidebar userRole={userRole} onLogout={onLogout} />
       <div className="ml-64 flex-1">
         <Header 
           title="Dashboard" 
@@ -170,7 +170,7 @@ export default function Dashboard({ userRole, onLogout }: DashboardProps) {
                   <i className="fas fa-undo mr-3"></i>
                   Return Equipment
                 </Button>
-                {user?.staff?.role === 'Technician' && (
+                {userRole === 'Technician' && (
                   <Button className="w-full justify-start bg-secondary hover:bg-teal-700">
                     <i className="fas fa-tools mr-3"></i>
                     Log Maintenance
