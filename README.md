@@ -1,0 +1,1 @@
+Designed a database-driven platform to streamline medical equipment rental, return, and maintenance operations in hospitals. HERMS centralizes device tracking, prevents scheduling conflicts, and automates maintenance logging—improving both patient care and staff productivity.
