@@ -1,0 +1,10 @@
+{
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "installCommand": "npm install vite esbuild --save-dev",
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist"
+  }
+}
